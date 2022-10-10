@@ -1,5 +1,8 @@
 package org.nogin.entity;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class News {
     private Long id;
     private String title;
