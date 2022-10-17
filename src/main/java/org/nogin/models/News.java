@@ -1,12 +1,23 @@
-package org.nogin.entity;
+package org.nogin.models;
 
-import org.springframework.stereotype.Component;
+import javax.persistence.*;
 
-@Component
+@Entity
+@Table(name = "NEWS")
 public class News {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "title")
     private String title;
+
+    @Column(name = "content")
     private String content;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinTable(name = "USERS",
+    joinColumns = @JoinColumn(name = "user_id"))
     private Long userId;
 
     public News() {

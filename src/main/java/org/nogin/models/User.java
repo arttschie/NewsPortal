@@ -1,11 +1,18 @@
-package org.nogin.entity;
+package org.nogin.models;
 
-import org.springframework.stereotype.Component;
+import javax.persistence.*;
 
-@Component
+@Entity
+@Table(name = "USERS")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "login")
     private String login;
+
+    @Column(name = "password")
     private String password;
 
     public User() {
