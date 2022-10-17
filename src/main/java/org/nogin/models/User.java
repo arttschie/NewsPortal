@@ -1,4 +1,4 @@
-package org.nogin.entity;
+package org.nogin.models;
 
 public class User {
     private Long id;
