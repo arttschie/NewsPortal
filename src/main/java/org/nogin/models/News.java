@@ -1,4 +1,4 @@
-package org.nogin.entity;
+package org.nogin.models;
 
 public class News {
     private Long id;
