@@ -1,12 +1,16 @@
-package org.nogin.models;
+package org.nogin.entity;
+
+import org.springframework.core.annotation.Order;
 
 import javax.persistence.*;
+import java.util.Set;
+
 
 @Entity
 @Table(name = "USERS")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "login")

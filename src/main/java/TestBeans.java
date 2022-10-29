@@ -1,4 +1,4 @@
-import org.nogin.models.User;
+import org.nogin.entity.User;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class TestBeans {
