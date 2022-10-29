@@ -1,8 +1,22 @@
 package org.nogin.models;
 
+import org.springframework.core.annotation.Order;
+
+import javax.persistence.*;
+import java.util.Set;
+
+
+@Entity
+@Table(name = "USERS")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(name = "login")
     private String login;
+
+    @Column(name = "password")
     private String password;
 
     public User() {
