@@ -1,10 +1,22 @@
-package org.nogin.models;
+package org.nogin.entity;
 
-import java.io.Serializable;
+import org.springframework.core.annotation.Order;
 
-public class User implements Serializable {
+import javax.persistence.*;
+import java.util.Set;
+
+
+@Entity
+@Table(name = "USERS")
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(name = "login")
     private String login;
+
+    @Column(name = "password")
     private String password;
 
     public User() {
@@ -67,37 +79,5 @@ public class User implements Serializable {
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 '}';
-    }
-
-    public static UserBuilder builder() {
-        return new UserBuilder();
-    }
-
-    public static class UserBuilder {
-        private Long id;
-        private String login;
-        private String password;
-
-        public UserBuilder() {
-        }
-
-        public UserBuilder id(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public UserBuilder login(String login) {
-            this.login = login;
-            return this;
-        }
-
-        public UserBuilder password(String password) {
-            this.password = password;
-            return this;
-        }
-
-        public User build() {
-            return new User(id, login, password);
-        }
     }
 }
