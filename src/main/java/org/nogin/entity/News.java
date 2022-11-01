@@ -86,4 +86,42 @@ public class News implements Serializable {
                 ", user=" + user +
                 '}';
     }
+
+    public static NewsBuilder builder() {
+        return new NewsBuilder();
+    }
+
+    public static class NewsBuilder {
+        private Long id;
+        private String title;
+        private String content;
+        private User user;
+
+        public NewsBuilder() {
+        }
+
+        public NewsBuilder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public NewsBuilder title(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public NewsBuilder content(String content) {
+            this.content = content;
+            return this;
+        }
+
+        public NewsBuilder user(User user) {
+            this.user = user;
+            return this;
+        }
+
+        public News build() {
+            return new News(id, title, content, user);
+        }
+    }
 }
