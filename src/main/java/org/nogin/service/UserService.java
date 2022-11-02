@@ -12,6 +12,6 @@ public interface UserService {
   User getByLogin(String login);
   User getByPassword(String password);
   void createUser();
-  User changeUserLogin(User user);
-  User changeUserPassword(User user);
+  User changeUserLogin(User user, String login);
+  User changeUserPassword(User user, String password);
 }
