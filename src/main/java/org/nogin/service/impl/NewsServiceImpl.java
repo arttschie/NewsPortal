@@ -35,16 +35,36 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public News findById(Long id) {
+    public News getById(Long id) {
         org.nogin.entity.News entity = newsRepository.findById(id);
         News news = newsMapper.mapToService(entity);
         return news;
     }
 
     @Override
-    public News findByTitle(String title) {
+    public News getByTitle(String title) {
         return newsRepository.findByTitle(title)
                 .map(newsMapper::mapToService)
                 .orElse(null);
+    }
+    
+    @Override
+    public void createNews(User user) {
+        News news = new News().builder()
+                        .id()
+                        .title()
+                        .content()
+                        .user(user)
+                    .build();
+    }
+    
+    @Override
+    public News changeNewsTitle(News news, User user) {
+        
+    }
+    
+    @Override
+    public News changeNewsContent(News news, User user) {
+        
     }
 }
