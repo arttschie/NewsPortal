@@ -2,6 +2,7 @@ package org.nogin.service.impl;
 
 import org.nogin.mapper.NewsMapper;
 import org.nogin.models.News;
+import org.nogin.models.User;
 import org.nogin.repository.NewsRepository;
 import org.nogin.service.NewsService;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,11 @@ public class NewsServiceImpl implements NewsService {
         return this.newsRepository.findAll().stream()
                 .map(newsMapper::mapToService)
                 .collect(Collectors.toList());
+    }
+    
+    @Override
+    public List<News> getNewsByUser(User user) {
+        return this.newsRepository.findAll().stream
     }
 
     @Override
