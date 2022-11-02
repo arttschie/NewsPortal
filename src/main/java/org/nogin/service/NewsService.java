@@ -12,6 +12,6 @@ public interface NewsService {
     News getById(Long id);
     News getByTitle(String title);
     void createNews(User user);
-    News changeNewsTitle(News news, User user);
-    News changeNewsContent(News news, User user);
+    News changeNewsTitle(News news, String title);
+    News changeNewsContent(News news, String content);
 }
