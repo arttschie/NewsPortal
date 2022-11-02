@@ -29,7 +29,9 @@ public class NewsServiceImpl implements NewsService {
     
     @Override
     public List<News> getNewsByUser(User user) {
-        return this.newsRepository.findAll().stream
+        return this.newsRepository.findAllByUser.stream()
+            .map(newsMapper::mapToService())
+            .collect(Collectors.toList());
     }
 
     @Override
