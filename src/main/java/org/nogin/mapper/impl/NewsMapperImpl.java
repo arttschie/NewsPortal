@@ -15,7 +15,7 @@ public class NewsMapperImpl implements NewsMapper {
                 .id(source.getId())
                 .title(source.getTitle())
                 .content(source.getContent())
-                .user(User.builder()
+                .user(new User.builder()
                         .id(source.getUser().getId())
                         .login(source.getUser().getLogin())
                         .password(source.getUser().getPassword())
@@ -29,19 +29,47 @@ public class NewsMapperImpl implements NewsMapper {
                 .id(source.getId())
                 .title(source.getTitle())
                 .content(source.getContent())
+                .user(new org.nogin.entity.User.builder()
+                    .id(source.getUser().getId())
+                    .login(source.getUser().getLogin())
+                    .password(source.getUser().getPassword())
+                    .build())
                 .build();
     }
 
     @Override
     public List<News> mapToService(List<org.nogin.entity.News> source) {
-        List<News> listNews = new ArrayList<>();
+        List<News> listNewsService = new ArrayList<>();
         for (org.nogin.entity.News news: source) {
-            listNews.add();
+            listNewsService.add(new News().builder()
+                                        .id(source.getId())
+                                        .title(source.getTitle())
+                                        .content(source.getContent())
+                                        .user(User.builder()
+                                            .id(source.getUser().getId())
+                                            .login(source.getUser().getLogin())
+                                            .password(source.getUser().getPassword())
+                                            .build())
+                                        .build());
         }
+        return listNewsService;
     }
 
     @Override
     public List<org.nogin.entity.News> mapToDatabase(List<News> source) {
-        return null;
+        List<org.nogin.entity.News> listNewsDatabase = new ArrayList<>();
+        for (News news : source) {
+            listNewsDatabase.add(new org.nogin.entity.News().builder()
+                                        .id(source.getId())
+                                        .title(source.getTitle())
+                                        .content(source.getContent())
+                                        .user(new org.nogin.entity.User.builder()
+                                            .id(source.getUser().getId())
+                                            .login(source.getUser().getLogin())
+                                            .password(source.getUser().getPassword())
+                                            .build())
+                                        .build());
+        }
+        return listNewsDatabase;
     }
 }
