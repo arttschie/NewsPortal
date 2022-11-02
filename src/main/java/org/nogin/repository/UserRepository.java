@@ -12,6 +12,6 @@ public interface UserRepository {
     User findByLogin(String login);
     User findByPassword(String password);
     void insertUser();
-    User updateUserLogin(User user);
-    User updateUserPassword(User user);
+    User updateUserLogin(User user, String login);
+    User updateUserPassword(User user, String password);
 }
