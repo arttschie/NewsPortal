@@ -1,10 +1,6 @@
 package org.nogin.entity;
 
-import org.springframework.core.annotation.Order;
-
 import javax.persistence.*;
-import java.util.Set;
-
 
 @Entity
 @Table(name = "USERS")

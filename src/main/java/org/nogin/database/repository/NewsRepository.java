@@ -11,7 +11,7 @@ public interface NewsRepository {
     List<News> findAllByUser(User user);
     News findById(Long id);
     Optional<News> findByTitle(String title);
-    void insertNews(User user);
+    News createNews(News news);
     News updateNewsTitle(News news, String title);
     News updateNewsContent(News news, String content);
 }
