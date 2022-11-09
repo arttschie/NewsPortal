@@ -1,10 +1,11 @@
 package org.nogin.service.impl;
 
-import org.nogin.mapper.NewsMapper;
-import org.nogin.models.News;
-import org.nogin.models.User;
-import org.nogin.repository.NewsRepository;
-import org.nogin.service.NewsService;
+import org.nogin.service.mapper.NewsMapper;
+import org.nogin.service.mapper.UserMapper;
+import org.nogin.service.models.News;
+import org.nogin.service.models.User;
+import org.nogin.database.repository.UserRepository;
+import org.nogin.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,10 +15,12 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final NewsMapper newsMapper;
 
-    public UserServiceImpl(UserRepository newsRepository, UserMapper newsMapper) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, NewsMapper newsMapper) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.newsMapper = newsMapper;
     }
 
     @Override
@@ -28,57 +31,54 @@ public class UserServiceImpl implements UserService {
     }
     
     @Override
-    public User getUserByNews(News news) {  
-        org.nogin.entity.User entity = userRepository.findUserByNews(news);
-        User user = userMapper.mapToService(entity);
+    public User getUserByNews(News news) {
+        org.nogin.database.entity.News newsEntity = newsMapper.mapToDatabase(news);
+        org.nogin.database.entity.User userEntity = userRepository.findUserByNews(newsEntity);
+        User user = userMapper.mapToService(userEntity);
         return user;
     }
 
     @Override
     public User getById(Long id) {
-        org.nogin.entity.User entity = userRepository.findById(id);
+        org.nogin.database.entity.User entity = userRepository.findById(id);
         User user = userMapper.mapToService(entity);
         return user;
     }
     
     @Override
-    User getByLogin(String login) {
-        org.nogin.entity.User entity = userRepository.findByLogin(login);
+    public User getByLogin(String login) {
+        org.nogin.database.entity.User entity = userRepository.findByLogin(login);
         User user = userMapper.mapToService(entity);
         return user;
     }
     
     @Override
-    User getByPassword(String password) {
-        org.nogin.entity.User entity = userRepository.findByPassword(password);
+    public User getByPassword(String password) {
+        org.nogin.database.entity.User entity = userRepository.findByPassword(password);
         User user = userMapper.mapToService(entity);
         return user;
     }
     
     @Override
-    void createUser() {
-        User user = new User.builder()
-                            .id()
-                            .login()
-                            .password()
-                          .build();
+    public void createUser() {
+
     }
     
     @Override
-    User changeUserLogin(User user, String login) {
-        return new User.builder()
-                          .id(user.getId())
-                          .login(login)
-                          .password(user.getPassword())
-                        .build();          
+    public User changeUserLogin(User user, String login) {
+        return User.builder()
+                  .id(user.getId())
+                  .login(login)
+                  .password(user.getPassword())
+                .build();
     }
     
     @Override
-    User changeUserPassword(User user, String password) {
-        return new User.builder()
-                          .id(user.getId())
-                          .login(user.getLogin())
-                          .password(password)
-                        .build();          
+    public User changeUserPassword(User user, String password) {
+        return User.builder()
+                  .id(user.getId())
+                  .login(user.getLogin())
+                  .password(password)
+                .build();
     }
 }

@@ -1,4 +1,4 @@
-package org.nogin.models;
+package org.nogin.service.models;
 
 import java.io.Serializable;
 

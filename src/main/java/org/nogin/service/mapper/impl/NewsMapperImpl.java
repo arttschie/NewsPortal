@@ -1,16 +1,15 @@
-package org.nogin.mapper.impl;
+package org.nogin.service.mapper.impl;
 
-import org.nogin.mapper.NewsMapper;
-import org.nogin.models.News;
-import org.nogin.models.User;
-import org.nogin.service.UserService;
+import org.nogin.service.mapper.NewsMapper;
+import org.nogin.service.models.News;
+import org.nogin.service.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class NewsMapperImpl implements NewsMapper {
     @Override
-    public News mapToService(org.nogin.entity.News source) {
+    public News mapToService(org.nogin.database.entity.News source) {
         if (source == null) {
             return null;
         }
@@ -34,12 +33,12 @@ public class NewsMapperImpl implements NewsMapper {
     }
 
     @Override
-    public org.nogin.entity.News mapToDatabase(News source) {
-        return org.nogin.entity.News.builder()
+    public org.nogin.database.entity.News mapToDatabase(News source) {
+        return org.nogin.database.entity.News.builder()
                 .id(source.getId())
                 .title(source.getTitle())
                 .content(source.getContent())
-                .user(org.nogin.entity.User.builder()
+                .user(org.nogin.database.entity.User.builder()
                     .id(source.getUser().getId())
                     .login(source.getUser().getLogin())
                     .password(source.getUser().getPassword())
@@ -48,9 +47,9 @@ public class NewsMapperImpl implements NewsMapper {
     }
 
     @Override
-    public List<News> mapToService(List<org.nogin.entity.News> source) {
+    public List<News> mapToService(List<org.nogin.database.entity.News> source) {
         List<News> listNewsService = new ArrayList<>();
-        for (org.nogin.entity.News news: source) {
+        for (org.nogin.database.entity.News news: source) {
             listNewsService.add(News.builder()
                                     .id(news.getId())
                                     .title(news.getTitle())
@@ -66,14 +65,14 @@ public class NewsMapperImpl implements NewsMapper {
     }
 
     @Override
-    public List<org.nogin.entity.News> mapToDatabase(List<News> source) {
-        List<org.nogin.entity.News> listNewsDatabase = new ArrayList<>();
+    public List<org.nogin.database.entity.News> mapToDatabase(List<News> source) {
+        List<org.nogin.database.entity.News> listNewsDatabase = new ArrayList<>();
         for (News news : source) {
-            listNewsDatabase.add(org.nogin.entity.News.builder()
+            listNewsDatabase.add(org.nogin.database.entity.News.builder()
                                         .id(news.getId())
                                         .title(news.getTitle())
                                         .content(news.getContent())
-                                        .user(org.nogin.entity.User.builder()
+                                        .user(org.nogin.database.entity.User.builder()
                                             .id(news.getUser().getId())
                                             .login(news.getUser().getLogin())
                                             .password(news.getUser().getPassword())

@@ -1,4 +1,4 @@
-package org.nogin.entity;
+package org.nogin.database.entity;
 
 import javax.persistence.*;
 

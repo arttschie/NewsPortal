@@ -1,7 +1,7 @@
 package org.nogin.service;
 
-import org.nogin.models.News;
-import org.nogin.models.User;
+import org.nogin.service.models.News;
+import org.nogin.service.models.User;
 
 import java.util.List;
 

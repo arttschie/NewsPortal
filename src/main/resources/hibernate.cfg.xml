@@ -12,7 +12,7 @@
         <property name="show_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
 
-        <mapping class="org.nogin.entity.User"/>
-        <mapping class="org.nogin.entity.News"/>
+        <mapping class="org.nogin.database.entity.User"/>
+        <mapping class="org.nogin.database.entity.News"/>
     </session-factory>
 </hibernate-configuration>

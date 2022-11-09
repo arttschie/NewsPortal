@@ -1,9 +1,10 @@
 package org.nogin.service.impl;
 
-import org.nogin.mapper.NewsMapper;
-import org.nogin.models.News;
-import org.nogin.models.User;
-import org.nogin.repository.NewsRepository;
+import org.nogin.service.mapper.NewsMapper;
+import org.nogin.service.mapper.UserMapper;
+import org.nogin.service.models.News;
+import org.nogin.service.models.User;
+import org.nogin.database.repository.NewsRepository;
 import org.nogin.service.NewsService;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +15,12 @@ import java.util.stream.Collectors;
 public class NewsServiceImpl implements NewsService {
     private final NewsRepository newsRepository;
     private final NewsMapper newsMapper;
+    private final UserMapper userMapper;
 
-    public NewsServiceImpl(NewsRepository newsRepository, NewsMapper newsMapper) {
+    public NewsServiceImpl(NewsRepository newsRepository, NewsMapper newsMapper, UserMapper userMapper) {
         this.newsRepository = newsRepository;
         this.newsMapper = newsMapper;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -29,16 +32,16 @@ public class NewsServiceImpl implements NewsService {
     
     @Override
     public List<News> getNewsByUser(User user) {
-        return this.newsRepository.findAllByUser.stream()
-            .map(newsMapper::mapToService())
+        org.nogin.database.entity.User userEntity = userMapper.mapToDatabase(user);
+        return this.newsRepository.findAllByUser(userEntity).stream()
+            .map(newsMapper::mapToService)
             .collect(Collectors.toList());
     }
 
     @Override
     public News getById(Long id) {
-        org.nogin.entity.News entity = newsRepository.findById(id);
-        News news = newsMapper.mapToService(entity);
-        return news;
+        org.nogin.database.entity.News entity = newsRepository.findById(id);
+        return newsMapper.mapToService(entity);
     }
 
     @Override
@@ -49,22 +52,19 @@ public class NewsServiceImpl implements NewsService {
     }
     
     @Override
-    public void createNews(User user) {
-        News news = new News().builder()
-                        .id()
-                        .title()
-                        .content()
-                        .user(user)
-                    .build();
+    public News createNews(News news) {
+        org.nogin.database.entity.News entity = newsMapper.mapToDatabase(news);
+        org.nogin.database.entity.News created = newsRepository.createNews(entity);
+        return newsMapper.mapToService(created);
     }
-    
+
     @Override
-    public News changeNewsTitle(News news, User user) {
-        
+    public News changeNewsTitle(News news, String title) {
+        return null;
     }
-    
+
     @Override
-    public News changeNewsContent(News news, User user) {
-        
+    public News changeNewsContent(News news, String content) {
+        return null;
     }
 }

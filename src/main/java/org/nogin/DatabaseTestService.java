@@ -1,7 +1,7 @@
 package org.nogin;
 
 import org.hibernate.Session;
-import org.nogin.entity.User;
+import org.nogin.database.entity.User;
 import org.nogin.configuration.HibernateConfiguration;
 
 public class DatabaseTestService {

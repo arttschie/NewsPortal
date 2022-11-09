@@ -1,12 +1,12 @@
-package org.nogin.mapper;
+package org.nogin.service.mapper;
 
-import org.nogin.models.User;
+import org.nogin.service.models.User;
 
 import java.util.List;
 
 public interface UserMapper {
-    User mapToService(org.nogin.entity.User source);
-    org.nogin.entity.User mapToDatabase(User source);
-    List<User> mapToService(List<org.nogin.entity.User> source);
-    List<org.nogin.entity.User> mapToDatabase(List<User> source);
+    User mapToService(org.nogin.database.entity.User source);
+    org.nogin.database.entity.User mapToDatabase(User source);
+    List<User> mapToService(List<org.nogin.database.entity.User> source);
+    List<org.nogin.database.entity.User> mapToDatabase(List<User> source);
 }
