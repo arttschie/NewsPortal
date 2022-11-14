@@ -10,7 +10,6 @@
         <property name="hibernate.connection.username">USERDB</property>
         <property name="hibernate.dialect">org.hibernate.dialect.Oracle8iDialect</property>
         <property name="show_sql">true</property>
-        <property name="hibernate.hbm2ddl.auto">update</property>
 
         <mapping class="org.nogin.database.entity.User"/>
         <mapping class="org.nogin.database.entity.News"/>
