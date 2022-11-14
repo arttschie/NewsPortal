@@ -1,16 +1,16 @@
 package org.nogin.service;
 
 import org.nogin.service.models.News;
-import org.nogin.service.models.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface NewsService {
     List<News> getNews();
-    List<News> getNewsByUser(User user);
-    News getById(Long id);
-    News getByTitle(String title);
-    News createNews(News news);
-    News changeNewsTitle(News news, String title);
-    News changeNewsContent(News news, String content);
+    List<News> getNewsByUserId(Long userId);
+    Optional<News> getById(Long id);
+    Optional<News> getByTitle(String title);
+    void createNews(News news);
+    void changeNewsTitle(Long newsId, String title);
+    void changeNewsContent(Long newsId, String content);
 }

@@ -12,7 +12,7 @@ public class DatabaseTestService {
     public static void main(String[] args) {
         UserRepository userRepository = new UserRepositoryImpl();
 //        Session session = HibernateConfiguration.getSessionFactory().openSession();
-
+//
 //        session.beginTransaction();
 //
 //        User user = new User();

@@ -1,60 +1,49 @@
 package org.nogin.database.repository.impl;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.nogin.configuration.HibernateConfiguration;
-import org.nogin.database.entity.News;
 import org.nogin.database.entity.User;
 import org.nogin.database.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class UserRepositoryImpl implements UserRepository {
-    private SessionFactory sessionFactory;
-
-    public UserRepositoryImpl() {
-        this.sessionFactory = HibernateConfiguration.getSessionFactory();
-    }
-
     @Override
     public List<User> findAll() {
         return null;
     }
 
     @Override
-    public User findUserByNews(News news) {
-        return null;
+    public Optional<User> findUserByNewsId(Long newsId) {
+        return Optional.empty();
     }
 
     @Override
-    public User findById(Long id) {
-        try (Session session = sessionFactory.openSession()) {
-            return session.get(User.class, 1L);
-        }
+    public Optional<User> findById(Long id) {
+        return Optional.empty();
     }
 
     @Override
-    public User findByLogin(String login) {
-        return null;
+    public Optional<User> findByLogin(String login) {
+        return Optional.empty();
     }
 
     @Override
-    public User findByPassword(String password) {
-        return null;
+    public Optional<User> findByPassword(String password) {
+        return Optional.empty();
     }
 
     @Override
-    public void insertUser() {
+    public void createUser() {
 
     }
 
     @Override
-    public User updateUserLogin(User user, String login) {
-        return null;
+    public Optional<User> updateUserLogin(Long userId, String login) {
+        return Optional.empty();
     }
 
     @Override
-    public User updateUserPassword(User user, String password) {
-        return null;
+    public Optional<User> updateUserPassword(Long userId, String password) {
+        return Optional.empty();
     }
 }

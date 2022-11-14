@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByNews(News news) {
         org.nogin.database.entity.News newsEntity = newsMapper.mapToDatabase(news);
-        org.nogin.database.entity.User userEntity = userRepository.findUserByNews(newsEntity);
+        org.nogin.database.entity.User userEntity = userRepository.findUserByNewsId(newsEntity);
         User user = userMapper.mapToService(userEntity);
         return user;
     }

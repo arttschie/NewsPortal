@@ -1,14 +1,14 @@
 package org.nogin.service.impl;
 
+import org.nogin.database.repository.NewsRepository;
+import org.nogin.service.NewsService;
 import org.nogin.service.mapper.NewsMapper;
 import org.nogin.service.mapper.UserMapper;
 import org.nogin.service.models.News;
-import org.nogin.service.models.User;
-import org.nogin.database.repository.NewsRepository;
-import org.nogin.service.NewsService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,48 +23,43 @@ public class NewsServiceImpl implements NewsService {
         this.userMapper = userMapper;
     }
 
+
     @Override
     public List<News> getNews() {
-        return this.newsRepository.findAll().stream()
+        return newsRepository.findAll().stream()
                 .map(newsMapper::mapToService)
                 .collect(Collectors.toList());
     }
-    
-    @Override
-    public List<News> getNewsByUser(User user) {
-        org.nogin.database.entity.User userEntity = userMapper.mapToDatabase(user);
-        return this.newsRepository.findAllByUser(userEntity).stream()
-            .map(newsMapper::mapToService)
-            .collect(Collectors.toList());
-    }
 
     @Override
-    public News getById(Long id) {
-        org.nogin.database.entity.News entity = newsRepository.findById(id);
-        return newsMapper.mapToService(entity);
-    }
-
-    @Override
-    public News getByTitle(String title) {
-        return newsRepository.findByTitle(title)
+    public List<News> getNewsByUserId(Long userId) {
+        return newsRepository.findAllByUserId(userId).stream()
                 .map(newsMapper::mapToService)
-                .orElse(null);
-    }
-    
-    @Override
-    public News createNews(News news) {
-        org.nogin.database.entity.News entity = newsMapper.mapToDatabase(news);
-        org.nogin.database.entity.News created = newsRepository.createNews(entity);
-        return newsMapper.mapToService(created);
+                .collect(Collectors.toList());
     }
 
     @Override
-    public News changeNewsTitle(News news, String title) {
-        return null;
+    public Optional<News> getById(Long id) {
+        return newsRepository.findById(id).map(newsMapper::mapToService);
     }
 
     @Override
-    public News changeNewsContent(News news, String content) {
-        return null;
+    public Optional<News> getByTitle(String title) {
+        return Optional.empty();
+    }
+
+    @Override
+    public void createNews(News news) {
+
+    }
+
+    @Override
+    public void changeNewsTitle(Long newsId, String title) {
+
+    }
+
+    @Override
+    public void changeNewsContent(Long newsId, String content) {
+
     }
 }

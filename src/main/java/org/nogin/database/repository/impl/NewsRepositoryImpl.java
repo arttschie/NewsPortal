@@ -4,7 +4,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.nogin.configuration.HibernateConfiguration;
 import org.nogin.database.entity.News;
-import org.nogin.database.entity.User;
 import org.nogin.database.repository.NewsRepository;
 
 import javax.persistence.Query;
@@ -23,46 +22,86 @@ public class NewsRepositoryImpl implements NewsRepository {
 
     @Override
     public List<News> findAll() {
-        Session session = sessionFactory.openSession();
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(News.class);
+            Root<News> root = criteriaQuery.from(News.class);
+            criteriaQuery.select(root);
 
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(News.class);
-        Root<News> root = criteriaQuery.from(News.class);
-        criteriaQuery.select(root);
-        Query query = session.createQuery(criteriaQuery);
-        List<News> newsList = query.getResultList();
+            Query query = session.createQuery(criteriaQuery);
+            List<News> newsList = query.getResultList();
 
-        session.close();
-        return newsList;
+            return newsList;
+        }
     }
 
     @Override
-    public List<News> findAllByUser(User user) {
-        return null;
+    public List<News> findAllByUserId(Long userId) {
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(News.class);
+            Root<News> root = criteriaQuery.from(News.class);
+            criteriaQuery.select(root);
+            criteriaQuery.where(criteriaBuilder.equal(root.get("id"), userId));
+
+            Query query = session.createQuery(criteriaQuery);
+            List<News> newsList = query.getResultList();
+
+            return newsList;
+        }
     }
 
     @Override
-    public News findById(Long id) {
-        return null;
+    public Optional<News> findById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return Optional.of(session.get(News.class, id));
+        }
     }
 
     @Override
     public Optional<News> findByTitle(String title) {
-        return Optional.empty();
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(News.class);
+            Root<News> root = criteriaQuery.from(News.class);
+            criteriaQuery.select(root);
+            criteriaQuery.where(criteriaBuilder.equal(root.get("title"), title));
+
+            Query query = session.createQuery(criteriaQuery);
+            News news = (News) query.getSingleResult();
+
+            return Optional.of(news);
+        }
     }
 
     @Override
-    public News createNews(News news) {
-        return null;
+    public void createNews(News news) {
+        try (Session session = HibernateConfiguration.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.save(news);
+            session.getTransaction().commit();
+        }
     }
 
     @Override
-    public News updateNewsTitle(News news, String title) {
-        return null;
+    public void updateNewsTitle(Long newsId, String title) {
+        try (Session session = HibernateConfiguration.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            News news = session.get(News.class, newsId);
+            news.setTitle(title);
+            session.update(news);
+            session.getTransaction().commit();
+        }
     }
 
     @Override
-    public News updateNewsContent(News news, String content) {
-        return null;
+    public void updateNewsContent(Long newsId, String content) {
+        try (Session session = HibernateConfiguration.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            News news = session.get(News.class, newsId);
+            news.setContent(content);
+            session.update(news);
+            session.getTransaction().commit();
+        }
     }
 }
