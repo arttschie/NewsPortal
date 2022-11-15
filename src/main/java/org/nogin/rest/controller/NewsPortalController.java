@@ -34,7 +34,9 @@ public class NewsPortalController {
 
     @GetMapping("/news/title")
     public ResponseEntity<Object> getNewsByTitle(@RequestParam String title) {
-        return ResponseEntity.ok().body(newsService.getByTitle(title));
+        return newsService.getByTitle(title)
+                .<ResponseEntity<Object>>map(news -> ResponseEntity.ok().body(news))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping("/news/create")
