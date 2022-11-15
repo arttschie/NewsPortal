@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.nogin.configuration.HibernateConfiguration;
 import org.nogin.database.entity.News;
 import org.nogin.database.repository.NewsRepository;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -13,6 +14,7 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class NewsRepositoryImpl implements NewsRepository {
     private SessionFactory sessionFactory;
 
