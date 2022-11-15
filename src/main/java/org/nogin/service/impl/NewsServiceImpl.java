@@ -15,12 +15,10 @@ import java.util.stream.Collectors;
 public class NewsServiceImpl implements NewsService {
     private final NewsRepository newsRepository;
     private final NewsMapper newsMapper;
-    private final UserMapper userMapper;
 
-    public NewsServiceImpl(NewsRepository newsRepository, NewsMapper newsMapper, UserMapper userMapper) {
+    public NewsServiceImpl(NewsRepository newsRepository, NewsMapper newsMapper) {
         this.newsRepository = newsRepository;
         this.newsMapper = newsMapper;
-        this.userMapper = userMapper;
     }
 
 
@@ -45,21 +43,21 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public Optional<News> getByTitle(String title) {
-        return Optional.empty();
+        return newsRepository.findByTitle(title).map(newsMapper::mapToService);
     }
 
     @Override
     public void createNews(News news) {
-
+        newsRepository.createNews(newsMapper.mapToDatabase(news));
     }
 
     @Override
     public void changeNewsTitle(Long newsId, String title) {
-
+        newsRepository.updateNewsTitle(newsId, title);
     }
 
     @Override
     public void changeNewsContent(Long newsId, String content) {
-
+        newsRepository.updateNewsContent(newsId, content);
     }
 }
