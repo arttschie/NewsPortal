@@ -4,11 +4,13 @@ import org.nogin.database.repository.UserRepository;
 import org.nogin.service.UserService;
 import org.nogin.service.mapper.UserMapper;
 import org.nogin.service.models.User;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
