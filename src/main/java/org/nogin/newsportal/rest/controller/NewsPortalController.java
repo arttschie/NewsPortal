@@ -3,6 +3,7 @@ package org.nogin.newsportal.rest.controller;
 import org.nogin.newsportal.service.NewsService;
 import org.nogin.newsportal.service.UserService;
 import org.nogin.newsportal.service.models.News;
+import org.nogin.newsportal.service.models.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,6 +61,51 @@ public class NewsPortalController {
     public ResponseEntity<Object> changeNewsContent(@RequestParam Long newsId,
                                                     @RequestParam String content) {
         newsService.changeNewsContent(newsId, content);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/users")
+    public ResponseEntity<List<User>> getUsers() {
+        return ResponseEntity.ok().body(userService.getUsers());
+    }
+
+    @GetMapping("/user/newsId")
+    public ResponseEntity<User> getUsersByNewsId(@RequestParam Long newsId) {
+        return ResponseEntity.ok().body(userService.getUserByNewsId(newsId).get());
+    }
+    
+    @GetMapping("/user/id")
+    public ResponseEntity<User> getUserById(@RequestParam Long id) {
+        return ResponseEntity.ok().body(userService.getById(id).get());
+    }
+
+    @GetMapping("/user/login")
+    public ResponseEntity<User> getUserByLogin(@RequestParam String login) {
+        return ResponseEntity.ok().body(userService.getByLogin(login).get());
+    }
+
+    @GetMapping("/user/password")
+    public ResponseEntity<User> getUserByPassword(@RequestParam String password) {
+        return ResponseEntity.ok().body(userService.getByLogin(password).get());
+    }
+    
+    @PostMapping("user/create")
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        userService.createUser(user);
+        return ResponseEntity.ok().build();
+    }
+    
+    @PutMapping("user/update/login")
+    public ResponseEntity<Object> changeUserLogin(@RequestParam Long id,
+                                                  @RequestParam String login) {
+        userService.changeUserLogin(id, login);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("user/update/password")
+    public ResponseEntity<Object> changeUserPassword(@RequestParam Long id,
+                                                     @RequestParam String password) {
+        userService.changeUserPassword(id, password);
         return ResponseEntity.ok().build();
     }
 }
