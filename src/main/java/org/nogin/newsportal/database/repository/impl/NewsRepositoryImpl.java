@@ -18,8 +18,8 @@ import java.util.Optional;
 public class NewsRepositoryImpl implements NewsRepository {
     private SessionFactory sessionFactory;
 
-    public NewsRepositoryImpl() {
-        this.sessionFactory = HibernateUtil.getSessionFactory();
+    public NewsRepositoryImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override

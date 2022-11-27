@@ -19,8 +19,8 @@ import java.util.Optional;
 public class UserRepositoryImpl implements UserRepository {
     private SessionFactory sessionFactory;
 
-    public UserRepositoryImpl() {
-        this.sessionFactory = HibernateUtil.getSessionFactory();
+    public UserRepositoryImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override

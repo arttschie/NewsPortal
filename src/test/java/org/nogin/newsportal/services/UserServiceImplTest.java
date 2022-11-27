@@ -1,4 +1,4 @@
-package org.nogin.newsportal;
+package org.nogin.newsportal.services;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -76,7 +76,7 @@ public class UserServiceImplTest {
     public void changeUserLogin() {
         doNothing().when(userService).changeUserLogin(isA(Long.class), isA(String.class));
         userService.changeUserLogin(user.getId(), user.getLogin());
-        verify(userService).changeUserPassword(user.getId(), user.getLogin());
+        verify(userService).changeUserLogin(user.getId(), user.getLogin());
     }
 
     @Test

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/NewsPortal")
+@RequestMapping("/news-portal")
 public class NewsPortalController {
     private final NewsService newsService;
     private final UserService userService;
@@ -25,20 +25,20 @@ public class NewsPortalController {
         return ResponseEntity.ok().body(newsService.getNews());
     }
 
-    @GetMapping("/news/userId")
-    public ResponseEntity<List<News>> getNewsByUserId(@RequestParam Long userId) {
+    @GetMapping("/news/user{userId}")
+    public ResponseEntity<List<News>> getNewsByUserId(@PathVariable(value = "userId") Long userId) {
         return ResponseEntity.ok().body(newsService.getNewsByUserId(userId));
     }
 
-    @GetMapping("/news/id")
-    public ResponseEntity<News> getNewsById(@RequestParam Long id) {
+    @GetMapping("/news/{id}")
+    public ResponseEntity<News> getNewsById(@PathVariable(value = "id") Long id) {
         return newsService.getById(id)
                 .map(news -> ResponseEntity.ok().body(news))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/news/title")
-    public ResponseEntity<News> getNewsByTitle(@RequestParam String title) {
+    @GetMapping("/news/{title}")
+    public ResponseEntity<News> getNewsByTitle(@PathVariable(value = "title") String title) {
         return newsService.getByTitle(title)
                 .map(news -> ResponseEntity.ok().body(news))
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -69,18 +69,18 @@ public class NewsPortalController {
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
-    @GetMapping("/user/newsId")
-    public ResponseEntity<User> getUsersByNewsId(@RequestParam Long newsId) {
+    @GetMapping("/user/news{newsId}")
+    public ResponseEntity<User> getUsersByNewsId(@PathVariable(value = "newsId") Long newsId) {
         return ResponseEntity.ok().body(userService.getUserByNewsId(newsId).get());
     }
     
-    @GetMapping("/user/id")
-    public ResponseEntity<User> getUserById(@RequestParam Long id) {
+    @GetMapping("/user/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable(value = "id") Long id) {
         return ResponseEntity.ok().body(userService.getById(id).get());
     }
 
-    @GetMapping("/user/login")
-    public ResponseEntity<User> getUserByLogin(@RequestParam String login) {
+    @GetMapping("/user/{login}")
+    public ResponseEntity<User> getUserByLogin(@PathVariable(value = "login") String login) {
         return ResponseEntity.ok().body(userService.getByLogin(login).get());
     }
 

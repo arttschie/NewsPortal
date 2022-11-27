@@ -1,8 +1,15 @@
-package org.nogin.newsportal;
+package org.nogin.newsportal.services;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.nogin.newsportal.database.repository.NewsRepository;
+import org.nogin.newsportal.database.repository.impl.NewsRepositoryImpl;
 import org.nogin.newsportal.service.NewsService;
+import org.nogin.newsportal.service.impl.NewsServiceImpl;
+import org.nogin.newsportal.service.mapper.NewsMapper;
+import org.nogin.newsportal.service.mapper.impl.NewsMapperImpl;
 import org.nogin.newsportal.service.models.News;
 import org.nogin.newsportal.service.models.User;
 
