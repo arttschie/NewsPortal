@@ -5,7 +5,6 @@ import org.nogin.newsportal.service.NewsService;
 import org.nogin.newsportal.service.UserService;
 import org.nogin.newsportal.service.impl.NewsServiceImpl;
 import org.nogin.newsportal.service.impl.UserServiceImpl;
-import org.nogin.newsportal.service.models.User;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 

@@ -14,16 +14,18 @@ import org.nogin.newsportal.service.mapper.NewsMapper;
 import org.nogin.newsportal.service.mapper.UserMapper;
 import org.nogin.newsportal.service.mapper.impl.NewsMapperImpl;
 import org.nogin.newsportal.service.mapper.impl.UserMapperImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AppConfiguration {
-    @Autowired
-    private NewsMapper newsMapper;
-    @Autowired
-    private NewsRepository newsRepository;
+    private final NewsMapper newsMapper;
+    private final NewsRepository newsRepository;
+
+    public AppConfiguration(NewsMapper newsMapper, NewsRepository newsRepository) {
+        this.newsMapper = newsMapper;
+        this.newsRepository = newsRepository;
+    }
 
     @Bean
     public SessionFactory sessionFactory() {

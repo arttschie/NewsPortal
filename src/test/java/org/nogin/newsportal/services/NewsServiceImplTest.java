@@ -1,15 +1,11 @@
 package org.nogin.newsportal.services;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.nogin.newsportal.database.repository.NewsRepository;
-import org.nogin.newsportal.database.repository.impl.NewsRepositoryImpl;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.nogin.newsportal.service.NewsService;
-import org.nogin.newsportal.service.impl.NewsServiceImpl;
-import org.nogin.newsportal.service.mapper.NewsMapper;
-import org.nogin.newsportal.service.mapper.impl.NewsMapperImpl;
 import org.nogin.newsportal.service.models.News;
 import org.nogin.newsportal.service.models.User;
 
@@ -20,6 +16,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension)
 public class NewsServiceImplTest {
     private final User user = User.builder()
             .id(0L)
@@ -33,7 +30,10 @@ public class NewsServiceImplTest {
             .user(user)
             .build();
     private final List<News> newsList = Collections.singletonList(news);
-    private final NewsService newsService = mock(NewsService.class);
+//    private final NewsService newsService = mock(NewsService.class);
+
+    @Mock
+    private NewsService newsService;
 
     @Test
     @DisplayName("Test for getNews() method")
