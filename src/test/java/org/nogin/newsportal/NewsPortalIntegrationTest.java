@@ -25,9 +25,6 @@ import java.sql.SQLException;
 
 @Testcontainers
 public class NewsPortalIntegrationTest {
-    private Connection connection;
-    private PreparedStatement preparedStatement;
-
     @Container
     private static final OracleContainer oracle = new OracleContainer(DockerImageName.parse("oracleinanutshell/oracle-xe-11g"));
 
@@ -41,7 +38,6 @@ public class NewsPortalIntegrationTest {
 
     @Test
     public void createUserTest() throws SQLException {
-        preparedStatement = connection.prepareStatement("");
         
     }
 

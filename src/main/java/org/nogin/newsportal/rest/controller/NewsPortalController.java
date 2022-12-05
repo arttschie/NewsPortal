@@ -44,20 +44,20 @@ public class NewsPortalController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/news/create")
+    @PostMapping("/news")
     public ResponseEntity<Object> createNews(@RequestBody News news) {
         newsService.createNews(news);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/news/update/title")
+    @PutMapping("/news/title")
     public ResponseEntity<Object> changeNewsTitle(@RequestParam Long newsId,
                                                   @RequestParam String title) {
         newsService.changeNewsTitle(newsId, title);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/news/update/content")
+    @PutMapping("/news/content")
     public ResponseEntity<Object> changeNewsContent(@RequestParam Long newsId,
                                                     @RequestParam String content) {
         newsService.changeNewsContent(newsId, content);
@@ -69,40 +69,40 @@ public class NewsPortalController {
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
-    @GetMapping("/user/news{newsId}")
+    @GetMapping("/users/news{newsId}")
     public ResponseEntity<User> getUsersByNewsId(@PathVariable(value = "newsId") Long newsId) {
         return ResponseEntity.ok().body(userService.getUserByNewsId(newsId).get());
     }
     
-    @GetMapping("/user/{id}")
+    @GetMapping("/users/{id}")
     public ResponseEntity<User> getUserById(@PathVariable(value = "id") Long id) {
         return ResponseEntity.ok().body(userService.getById(id).get());
     }
 
-    @GetMapping("/user/{login}")
+    @GetMapping("/users/{login}")
     public ResponseEntity<User> getUserByLogin(@PathVariable(value = "login") String login) {
         return ResponseEntity.ok().body(userService.getByLogin(login).get());
     }
 
-    @GetMapping("/user/password")
+    @GetMapping("/users/password")
     public ResponseEntity<User> getUserByPassword(@RequestParam String password) {
         return ResponseEntity.ok().body(userService.getByLogin(password).get());
     }
     
-    @PostMapping("user/create")
+    @PostMapping("/users")
     public ResponseEntity<User> createUser(@RequestBody User user) {
         userService.createUser(user);
         return ResponseEntity.ok().build();
     }
     
-    @PutMapping("user/update/login")
+    @PutMapping("/users/login")
     public ResponseEntity<Object> changeUserLogin(@RequestParam Long id,
                                                   @RequestParam String login) {
         userService.changeUserLogin(id, login);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("user/update/password")
+    @PutMapping("/users/password")
     public ResponseEntity<Object> changeUserPassword(@RequestParam Long id,
                                                      @RequestParam String password) {
         userService.changeUserPassword(id, password);

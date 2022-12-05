@@ -15,9 +15,11 @@ import org.nogin.newsportal.service.mapper.UserMapper;
 import org.nogin.newsportal.service.mapper.impl.NewsMapperImpl;
 import org.nogin.newsportal.service.mapper.impl.UserMapperImpl;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@ComponentScan("org.nogin.newsportal")
 public class AppConfiguration {
     private final NewsMapper newsMapper;
     private final NewsRepository newsRepository;
