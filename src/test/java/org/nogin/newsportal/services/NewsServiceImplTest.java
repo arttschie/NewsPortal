@@ -13,20 +13,12 @@ import org.nogin.newsportal.service.mapper.NewsMapper;
 import org.nogin.newsportal.service.models.News;
 import org.nogin.newsportal.service.models.User;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class NewsServiceImplTest {
     private static User userService;
     private static News newsService;
-    private static org.nogin.newsportal.database.entity.User userDatabase;
-    private static org.nogin.newsportal.database.entity.News newsDatabase;
-    private static List<News> newsList;
 
     @BeforeAll
     public static void init() {
@@ -42,21 +34,6 @@ public class NewsServiceImplTest {
                 .content("Test content")
                 .user(userService)
                 .build();
-
-        userDatabase = org.nogin.newsportal.database.entity.User.builder()
-                .id(0L)
-                .login("Test login")
-                .password("Test password")
-                .build();
-
-        newsDatabase = org.nogin.newsportal.database.entity.News.builder()
-                .id(0L)
-                .content("Test content")
-                .title("Test title")
-                .user(userDatabase)
-                .build();
-
-        newsList = Collections.singletonList(newsService);
     }
 
     @InjectMocks
@@ -78,22 +55,22 @@ public class NewsServiceImplTest {
     @Test
     @DisplayName("Test for getNewsByUserId(Long userId) method")
     public void getByUserId() {
-        when(newsServiceImpl.getNewsByUserId(userService.getId())).thenReturn(newsList);
-        assertEquals(newsList, newsServiceImpl.getNewsByUserId(userService.getId()));
+        newsServiceImpl.getNewsByUserId(anyLong());
+        verify(newsRepository).findAllByUserId(anyLong());
     }
 
     @Test
     @DisplayName("Test for getById(Long id) method")
     public void getById() {
-        when(newsServiceImpl.getById(newsService.getId())).thenReturn(Optional.of(newsService));
-        assertEquals(Optional.of(newsService), newsServiceImpl.getById(0L));
+        newsServiceImpl.getById(anyLong());
+        verify(newsRepository).findById(anyLong());
     }
 
     @Test
     @DisplayName("Test for getByTitle(String title) method")
     public void getByTitle() {
-        when(newsServiceImpl.getByTitle("Test title")).thenReturn(Optional.of(newsService));
-        assertEquals(Optional.of(newsService), newsServiceImpl.getByTitle("Test title"));
+        newsServiceImpl.getByTitle("Test title");
+        verify(newsRepository).findByTitle(anyString());
     }
 
     @Test
@@ -107,16 +84,14 @@ public class NewsServiceImplTest {
     @Test
     @DisplayName("Test for changeNewsTitle(Long newsId, String title) method")
     public void changeNewsTitle() {
-        doNothing().when(newsServiceImpl).changeNewsTitle(isA(Long.class), isA(String.class));
-        newsServiceImpl.changeNewsTitle(newsService.getId(), newsService.getTitle());
-        verify(newsServiceImpl).changeNewsTitle(newsService.getId(), newsService.getTitle());
+        newsServiceImpl.changeNewsTitle(anyLong(), anyString());
+        verify(newsRepository).updateNewsTitle(anyLong(), anyString());
     }
 
     @Test
     @DisplayName("Test for changeNewsContent(Long newsId, String title) method")
     public void changeNewsContent() {
-        doNothing().when(newsServiceImpl).changeNewsContent(isA(Long.class), isA(String.class));
-        newsServiceImpl.changeNewsContent(newsService.getId(), newsService.getTitle());
-        verify(newsServiceImpl).changeNewsContent(newsService.getId(), newsService.getTitle());
+        newsServiceImpl.changeNewsContent(anyLong(), anyString());
+        verify(newsRepository).updateNewsContent(anyLong(), anyString());
     }
 }
