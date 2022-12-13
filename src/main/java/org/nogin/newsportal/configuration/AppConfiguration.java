@@ -17,18 +17,12 @@ import org.nogin.newsportal.service.mapper.impl.UserMapperImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
 @ComponentScan("org.nogin.newsportal")
+@EnableWebMvc
 public class AppConfiguration {
-    private final NewsMapper newsMapper;
-    private final NewsRepository newsRepository;
-
-    public AppConfiguration(NewsMapper newsMapper, NewsRepository newsRepository) {
-        this.newsMapper = newsMapper;
-        this.newsRepository = newsRepository;
-    }
-
     @Bean
     public SessionFactory sessionFactory() {
         return HibernateUtil.getSessionFactory();
@@ -55,7 +49,7 @@ public class AppConfiguration {
     }
 
     @Bean
-    public NewsService newsService() {
+    public NewsService newsService(NewsMapper newsMapper, NewsRepository newsRepository) {
         return new NewsServiceImpl(newsRepository, newsMapper);
     }
 
