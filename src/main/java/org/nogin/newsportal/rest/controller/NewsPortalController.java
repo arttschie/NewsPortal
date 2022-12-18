@@ -25,19 +25,19 @@ public class NewsPortalController {
         return ResponseEntity.ok().body(newsService.getNews());
     }
 
-    @GetMapping("/news/user{userId}")
+    @PostMapping("/news/user{userId}")
     public ResponseEntity<List<News>> getNewsByUserId(@PathVariable(value = "userId") Long userId) {
         return ResponseEntity.ok().body(newsService.getNewsByUserId(userId));
     }
 
-    @GetMapping("/news/{id}")
+    @PostMapping("/news/{id}")
     public ResponseEntity<News> getNewsById(@PathVariable(value = "id") Long id) {
         return newsService.getById(id)
                 .map(news -> ResponseEntity.ok().body(news))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/news/{title}")
+    @PostMapping("/news/{title}")
     public ResponseEntity<News> getNewsByTitle(@PathVariable(value = "title") String title) {
         return newsService.getByTitle(title)
                 .map(news -> ResponseEntity.ok().body(news))
@@ -69,22 +69,22 @@ public class NewsPortalController {
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
-    @GetMapping("/users/news{newsId}")
+    @PostMapping("/users/news{newsId}")
     public ResponseEntity<User> getUsersByNewsId(@PathVariable(value = "newsId") Long newsId) {
         return ResponseEntity.ok().body(userService.getUserByNewsId(newsId).get());
     }
     
-    @GetMapping("/users/{id}")
+    @PostMapping("/users/{id}")
     public ResponseEntity<User> getUserById(@PathVariable(value = "id") Long id) {
         return ResponseEntity.ok().body(userService.getById(id).get());
     }
 
-    @GetMapping("/users/{login}")
+    @PostMapping("/users/{login}")
     public ResponseEntity<User> getUserByLogin(@PathVariable(value = "login") String login) {
         return ResponseEntity.ok().body(userService.getByLogin(login).get());
     }
 
-    @GetMapping("/users/password")
+    @PostMapping("/users/password")
     public ResponseEntity<User> getUserByPassword(@RequestParam String password) {
         return ResponseEntity.ok().body(userService.getByLogin(password).get());
     }
