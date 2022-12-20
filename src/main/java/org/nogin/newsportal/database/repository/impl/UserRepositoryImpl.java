@@ -95,7 +95,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void createUser(User user) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.save(user);
             session.getTransaction().commit();
@@ -104,7 +104,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void updateUserLogin(Long userId, String login) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             User user = session.get(User.class, userId);
             user.setLogin(login);
@@ -115,7 +115,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void updateUserPassword(Long userId, String password) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             User user = session.get(User.class, userId);
             user.setPassword(password);
