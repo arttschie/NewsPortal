@@ -78,7 +78,7 @@ public class NewsRepositoryImpl implements NewsRepository {
 
     @Override
     public void createNews(News news) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.save(news);
             session.getTransaction().commit();
@@ -87,7 +87,7 @@ public class NewsRepositoryImpl implements NewsRepository {
 
     @Override
     public void updateNewsTitle(Long newsId, String title) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             News news = session.get(News.class, newsId);
             news.setTitle(title);
@@ -98,7 +98,7 @@ public class NewsRepositoryImpl implements NewsRepository {
 
     @Override
     public void updateNewsContent(Long newsId, String content) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             News news = session.get(News.class, newsId);
             news.setContent(content);
@@ -109,7 +109,7 @@ public class NewsRepositoryImpl implements NewsRepository {
 
     @Override
     public void deleteNews(News news) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.delete(news);
             session.getTransaction().commit();
