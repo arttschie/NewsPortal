@@ -30,7 +30,7 @@ public class NewsPortalController {
         return ResponseEntity.ok().body(newsService.getNewsByUserId(userId));
     }
 
-    @PostMapping("/news/{id}")
+    @GetMapping("/news/{id}")
     public ResponseEntity<News> getNewsById(@PathVariable(value = "id") Long id) {
         return newsService.getById(id)
                 .map(news -> ResponseEntity.ok().body(news))
@@ -69,12 +69,12 @@ public class NewsPortalController {
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
-    @PostMapping("/users/news{newsId}")
+    @GetMapping("/users/news/{newsId}")
     public ResponseEntity<User> getUsersByNewsId(@PathVariable(value = "newsId") Long newsId) {
         return ResponseEntity.ok().body(userService.getUserByNewsId(newsId).get());
     }
     
-    @PostMapping("/users/{id}")
+    @GetMapping("/users/{id}")
     public ResponseEntity<User> getUserById(@PathVariable(value = "id") Long id) {
         return ResponseEntity.ok().body(userService.getById(id).get());
     }
