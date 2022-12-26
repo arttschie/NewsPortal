@@ -1,89 +1,105 @@
 package org.nogin.newsportal.services;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.nogin.newsportal.service.UserService;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.nogin.newsportal.database.repository.UserRepository;
+import org.nogin.newsportal.service.impl.UserServiceImpl;
+import org.nogin.newsportal.service.mapper.UserMapper;
 import org.nogin.newsportal.service.models.News;
 import org.nogin.newsportal.service.models.User;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.verify;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
-
+@ExtendWith(MockitoExtension.class)
 public class UserServiceImplTest {
-    private final User user = User.builder()
-            .id(0L)
-            .login("testLogin")
-            .password("testPassword")
-            .build();
-    private final News news = News.builder()
-            .id(0L)
-            .title("Test title")
-            .content("Test content")
-            .user(user)
-            .build();
-    private final List<User> userList = Collections.singletonList(user);
-    private final UserService userService = mock(UserService.class);
+    private static User user;
+    private static News news;
+
+    @BeforeAll
+    public static void init() {
+        user = User.builder()
+                .id(0L)
+                .login("Test login")
+                .password("Test password")
+                .build();
+
+        news = News.builder()
+                .id(0L)
+                .title("Test title")
+                .content("Test content")
+                .user(user)
+                .build();
+    }
+
+    @Mock
+    private UserRepository userRepository;
+
+    @Mock
+    private UserMapper userMapper;
+
+    @InjectMocks
+    private UserServiceImpl userServiceImpl;
 
     @Test
     @DisplayName("Test for getUsers() method")
     public void getUsers() {
-        when(userService.getUsers()).thenReturn(userList);
-        assertEquals(userList, userService.getUsers());
+        userServiceImpl.getUsers();
+        verify(userRepository).findAll();
     }
 
     @Test
     @DisplayName("Test for getUserByNewsId(Long newsId)  method")
     public void getUserByNewsId() {
-        when(userService.getUserByNewsId(news.getId())).thenReturn(Optional.of(user));
-        assertEquals(Optional.of(user), userService.getUserByNewsId(news.getId()));
+        userServiceImpl.getUserByNewsId(anyLong());
+        verify(userRepository).findUserByNewsId(anyLong());
     }
 
     @Test
     @DisplayName("Test for getById(Long id)  method")
     public void getById() {
-        when(userService.getById(user.getId())).thenReturn(Optional.of(user));
-        assertEquals(Optional.of(user), userService.getById(user.getId()));
+        userServiceImpl.getById(anyLong());
+        verify(userRepository).findById(anyLong());
     }
 
     @Test
     @DisplayName("Test for getByLogin(String login) method")
     public void getByLogin() {
-        when(userService.getByLogin(user.getLogin())).thenReturn(Optional.of(user));
-        assertEquals(Optional.of(user), userService.getByLogin(user.getLogin()));
+        userServiceImpl.getByLogin(anyString());
+        verify(userRepository).findByLogin(anyString());
     }
 
     @Test
     @DisplayName("Test for getByPassword(String password) method")
     public void getByPassword() {
-        when(userService.getByPassword(user.getPassword())).thenReturn(Optional.of(user));
-        assertEquals(Optional.of(user), userService.getByPassword(user.getPassword()));
+        userServiceImpl.getByPassword(anyString());
+        verify(userRepository).findByPassword(anyString());
     }
 
     @Test
     @DisplayName("Test for createUser(User user) method")
     public void createUser() {
-        doNothing().when(userService).createUser(isA(User.class));
-        userService.createUser(user);
-        verify(userService).createUser(user);
+        userServiceImpl.createUser(user);
+        verify(userMapper).mapToDatabase(any(User.class));
+        verify(userRepository).createUser(any());
     }
 
     @Test
     @DisplayName("Test for changeUserLogin(Long userId, String login) method")
     public void changeUserLogin() {
-        doNothing().when(userService).changeUserLogin(isA(Long.class), isA(String.class));
-        userService.changeUserLogin(user.getId(), user.getLogin());
-        verify(userService).changeUserLogin(user.getId(), user.getLogin());
+        userServiceImpl.changeUserLogin(anyLong(), anyString());
+        verify(userRepository).updateUserLogin(anyLong(), anyString());
     }
 
     @Test
     @DisplayName("Test for changeUserPassword(Long userId, String password) method")
     public void changeUserPassword() {
-        doNothing().when(userService).changeUserLogin(isA(Long.class), isA(String.class));
-        userService.changeUserPassword(user.getId(), user.getPassword());
-        verify(userService).changeUserPassword(user.getId(), user.getPassword());
+        userServiceImpl.changeUserPassword(anyLong(), anyString());
+        verify(userRepository).updateUserPassword(anyLong(), anyString());
     }
 }
