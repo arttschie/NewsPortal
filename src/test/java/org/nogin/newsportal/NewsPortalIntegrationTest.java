@@ -78,7 +78,7 @@ public class NewsPortalIntegrationTest {
     }
 
     @Test
-    public void NewsPortalIntegrationTest() {
+    public void newsPortalIntegrationTest() {
         userService.createUser(user);
         User userAcquired = userService.getByLogin(user.getLogin()).orElse(new User());
         newsService.createNews(News.builder()
